@@ -1,4 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api");
+require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
 
@@ -9,7 +10,9 @@ app.use(express.json());
 app.use(cors());
 
 
-const token = "7038548500:AAHgWxi5d1ZJHdtkNwCUFhevgwlqT4V0RGw";
+
+
+const token = process.env.TOKEN;
 
 const bot = new TelegramBot(token, { polling: true });
 
@@ -68,12 +71,16 @@ bot.onText(/\/run/, (msg) => {
 bot.onText(/\/test/, (msg) => {
   const chatId = msg.chat.id;
   console.log(msg.chat);
-  bot.sendMessage(chatId, "Welcome! This is test");
+  bot.sendMessage(chatId, `${msg.chat.first_name}`);
 });
 
 
 app.get("/user/info",(req,res)=>{
-  res.send("hello")
+  let chat = {}
+  bot.onText(/\/test/, (msg) => {
+    chat = msg.chat/first;
+  });
+  res.send(chat)
 })
 
 
